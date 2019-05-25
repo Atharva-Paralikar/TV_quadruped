@@ -1,0 +1,35 @@
+#GUIDE
+*Prerequisite function you will have to create for yourself before using this library.
+	1. Function to control the upper and lower link motors for your quadruped.
+		a) This will be two seperate functions(one for upper actuators one for lower) each having two parameters.
+			1.The index(refer configurations.png) of the leg you want to move.
+			2.Angle in degrees.
+		b) The direction of the rotation can either be handled in this functions itself or can also be handled in the library.
+		c) The offsets for precise 
+	2. A Delay function, this function should take argument in microseconds. This will decide the speed of your quadruped.This means each loop when the program runs will add a delay of that many microseconds in your program.
+
+*Refer configurations.png to choose choose your configuration of legs and select proper parameters accordingly.
+
+To begin create an object of class TVquad,this object will be your quadruped all function calls will be made from this object.
+
+functions provided by this library.
+
+void setUpperMotorf(void (*fn_controlling_upper_motors)(int leg,int angle))
+	-To point to your fn. for controlling upper actuators.
+
+void setLowerMotorf(void (*fn_controlling_lower_motors)(int leg,int angle))
+	-To point to your fn. for controlling lower actuators.
+
+void setPoints(double[72][2])
+	-Takes 72 points 0->x 1->y if you want to provide custom trajectory *each point should have refers 5 phases from(0 to 360)*.
+	-The effects of this function will nullify if you call any inbuilt preconfigured walking functions.
+	-Function setPhaseDiff(int,int,int,int)	needs to be called after this to adjuset the phase difference according to your trajectory
+
+void setPhaseDiff(int,int,int,int)
+	-Takes 4 parameters as phase differance for four legs can take values form 0 to 355
+
+void getAngles()
+	-Call this function after making changes to trajectory before making the quadruped run again to see visible changes.
+	-You can make multiple changes to the trajectory before calling this functions but the heirarchy of those functions need to be followed.
+
+void 
