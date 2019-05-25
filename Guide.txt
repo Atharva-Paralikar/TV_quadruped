@@ -116,6 +116,7 @@ void setLengthMul(int leg,double mul)
 
 void setLinkLength(int upper,int lower)
 	-Sets upper and lower link link lengths
+	-Call this function before any function or else trajectory will not be adjusted
 
 int currentPhase()
 	-Returns the current basePhase angle the quadruped is running at.
@@ -127,9 +128,9 @@ void setDelay(int)
 void setDelayf(void (*system_Delay)(int microseconds))
 	-Takes your systems delay functions which will take dealy in microseconds
 
-void setSlope(int leg, int slope)
-	-tilts the trajectory of a perticular leg for walking over slopes
-	-also use rotation of the whole chassises with it to make this effective
+void setSlope(int slope)
+	-tilts the trajectory of motion of leg by slope degrees to walk over slopes.
+	-also use rotation of the whole chassises with it to make this effective.
 
 void setRotation(int rot)
 	-rotates the axis of legs by rot degrees

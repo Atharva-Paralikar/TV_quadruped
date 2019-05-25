@@ -8,6 +8,7 @@
 #define _180p 57.295779513	//180/pi
 #define d2r(a) (a*p180)		//degrees to radians
 #define r2d(a) (a*_180p)	//radians to degrees
+#define s(a) ((a)*(a))
 //---------------------
 class TVquad
 {
@@ -15,14 +16,19 @@ private:
 	int offset[8];		//offsets per motor for each leg to form perfect |_ position
 	int signB[8];		//sign bits decide the direction the motors move
 	int l1,l2;	 		//lengths of limb1 and limb2
-	double trajectory_adjust;
 	int elbow_position[4][2];
+	int current_phase;
 	float slope;
+	int delay_ms;
 	int rotation;
+	int config;
+	int direction;
+	float trajectory_multiplier;
+	int phase_diff[4];
 	double height_mul[4];
 	double length_mul[4];
 	double points_of_trajectory[72][2];	//points in the trajectory 0->x 1->y
-	int joint_angle[72][2];
+	int angles[4][72][2];
 	void (*uMotor)(int leg,int angle);
 	void (*dMotor)(int leg,int angle);	
 	void (*Delay)(int delayMicroseconds);	//the 0th angles for upper joint and 1st are for lower limbs
@@ -33,26 +39,25 @@ public:
 	void setDelayf(void (*system_Delay)(int microseconds));
 	void setDirection(int[8]);
 	void setOffsets(int[8]);
-	void setPhaseDiff(int,int,int,int);
+	void setPhaseDiff(int[4]);
 	void setHeightMul(int leg,double mul);
 	void setLengthMul(int leg,double mul);
 	void setLinkLength(int upper,int lower);
 	void setDelay(int);
 	void setConfiguration(int,int);
-	void setSlope(int leg, int slope);
+	void setSlope(int s);
 	void setRotation(int rot);
+	void setElbow(int , int[]);
 
 	void test();/*this function tests your quadruped with all angles set to 90 for proper caliberation*/
-	void getAngles(int);
-	void GoToPhase(int leg,int phase);
 	void writeUpperA(int leg, int angle);
 	void writeLowerA(int  leg,int angle);
+	void getAngles(int);
+	void goToPhase(int leg,int phase);
 	void initial();
 	void alternateWalkMode();
 	void staticGait();
 	void RUN(int);
-	writeUM(int leg,int angle);
-	writeDM(int leg,int angle);
 	void left();
 	void right();
 	void rightEx();
