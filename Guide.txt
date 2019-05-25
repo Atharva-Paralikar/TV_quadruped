@@ -13,6 +13,9 @@
 To begin create an object of class TVquad,this object will be your quadruped all function calls will be made from this object.
 
 functions provided by this library.
+	
+void setConfiguration(int,int)
+	-refer configurations.png for configuration parameters
 
 void setUpperMotorf(void (*fn_controlling_upper_motors)(int leg,int angle))
 	-To point to your fn. for controlling upper actuators.
@@ -28,8 +31,106 @@ void setPoints(double[72][2])
 void setPhaseDiff(int,int,int,int)
 	-Takes 4 parameters as phase differance for four legs can take values form 0 to 355
 
-void getAngles()
+void getAngles(int)
+	-takes argument as the index of leg you want to calculate angle for, give 4 as argument if you want to calculate angles for all legs.
+	-If you change values for only one leg there is no need to calculate angles for all 4 legs, this will also speed up the process.
 	-Call this function after making changes to trajectory before making the quadruped run again to see visible changes.
 	-You can make multiple changes to the trajectory before calling this functions but the heirarchy of those functions need to be followed.
 
-void 
+void GoToPhase(int leg,int phase)
+	-To give a custom phase angle to a leg can be used for debugging or creating custom gait
+
+void writeUpperA(int leg, int angle)
+	-To give angle to upper actuator.
+	-First parameter is the index of leg and 2nd is the angle 
+
+void writeLowerA(int  leg,int angle)
+	-To give angle to lower actuator
+	-parameters same as writeUpperA()
+
+void initial()
+	-Sets the quadruped in initial standing position by making all 4 legs get to phase 0,0,0,0
+
+void alternateWalkMode()
+	-Adjusts all parameters of the quadruped to walk in inbuilt alternate mode with inbuilt trajectory
+	-This function will adjust delay, points, phase differances and height and length multipliers.
+
+void staticGait()
+	-Adjust all parameters of the quadruped to walk in inbuilt static gait with inbuilt trajectory
+	-This function will adjust delay, points, phase differances and height and length multipliers.
+
+void test()	
+	-Sets all angles to 90
+	-will help you adjust offset and direction using setDirection() and setOffsets()
+
+void RUN(int)
+	-This function is used to make the quadruped walk.
+	-takes 1 or 0 as parameter 1 will make it run and increment by one phase and 0 will stop it.
+	-If you make any modifications to the trajectory call getAngle() function before calling this for the first time.
+	-Needs to be called continuesly to make the quadruped walk.
+
+void writeUM(int leg,int angle)
+	-To directly write an "angle" in degrees to the upper actuator of "leg" with adjusted direction and offset
+
+void writeDM(int leg,int angle)
+	-To directly write an "angle" in degrees to the lower actuator of "leg" with adjusted direction and offset
+ 
+void left()
+	-Adjust trajectory to slightly turn left.
+
+void right()
+	-Adjust trajectory to slightly turn right.
+
+void rightEx()
+	-To take extreme right turn.
+
+void LeftEx()
+	-To take extreme left turn.
+
+void straight()
+	-To adjust trajectory to walk straight.
+
+void setDirection(int[8])
+	-Direction is either 1 or -1
+	-To set proper direction to leg movement.
+	-refer configurations.png for better understanding.
+	-first 4 are for upper actuators and later 4 for lower actuators.
+
+void setOffsets(int[8])
+	-To set proper offsets for legs, if any.
+	-first 4 are for upper actuators and later 4 for lower actuators.
+
+*Leg height and length multipliers: these help you to scale the trajectories your leg follows
+void setHeightMul(int leg,double mul)
+	-To set height multipliers for each leg.
+	-This will scale the height of trajectory of the "leg" by "mul".
+
+void setLengthMul(int leg,double mul)
+	-To set length multipliers for each leg.
+	-This will scale the length of trajectory of the "leg" by "mul".
+
+void setLengthMul(int leg,double mul)
+	-Set Elbow position for each leg.
+	-Giving 4 as parameter for leg will set the same point for all four legs.
+	-Basic elbow position can be (0,(the height you want the elbow to be form ground)).
+
+void setLinkLength(int upper,int lower)
+	-Sets upper and lower link link lengths
+
+int currentPhase()
+	-Returns the current basePhase angle the quadruped is running at.
+	-Useful for calculating the number of steps.
+
+void setDelay(int)
+	-Sets delay for each phase in microseconds
+
+void setDelayf(void (*system_Delay)(int microseconds))
+	-Takes your systems delay functions which will take dealy in microseconds
+
+void setSlope(int leg, int slope)
+	-tilts the trajectory of a perticular leg for walking over slopes
+	-also use rotation of the whole chassises with it to make this effective
+
+void setRotation(int rot)
+	-rotates the axis of legs by rot degrees
+
