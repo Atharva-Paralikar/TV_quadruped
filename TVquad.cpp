@@ -1,6 +1,4 @@
 #include "TVquad.h"
-int main(){	return 0;}
-
 TVquad::TVquad(){
 	trajectory_multiplier = 1;
 	elbow_position[0] = 0;
